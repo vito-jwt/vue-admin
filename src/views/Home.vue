@@ -58,6 +58,14 @@
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
 								{{ item.name }}
 							</el-breadcrumb-item>
+							<el-dropdown @command="handleCommand">
+								<span class="el-dropdown-link">
+								{{basic_token}}<i class="el-icon-arrow-down el-icon--right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item v-for=" (item,index) in  this.options" :key="index" :command="{value:item.value}" >{{item.value}}</el-dropdown-item>
+								</el-dropdown-menu>
+						</el-dropdown>
 						</el-breadcrumb>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
@@ -88,7 +96,18 @@
 					type: [],
 					resource: '',
 					desc: ''
-				}
+				},
+				options: [{
+          value: 'btc',
+          command: 'btc'
+        }, {
+          value: 'eth',
+          command: 'eth'
+        }, {
+          value: 'etc',
+          command: 'etc'
+		}],
+		basic_token:"btc"
 			}
 		},
 		methods: {
@@ -123,7 +142,12 @@
 			},
 			showMenu(i,status){
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
-			}
+			},
+			 handleCommand(command) {
+				 sessionStorage.setItem("basic_token",command.value)
+		this.$message('click on item ' + command.value);
+		location.reload();
+      }
 		},
 		mounted() {
 			var user = sessionStorage.getItem('user');
@@ -131,6 +155,10 @@
 				user = JSON.parse(user);
 				this.sysUserName = user.name || '';
 				this.sysUserAvatar = user.avatar || '';
+			}
+			var token = sessionStorage.getItem('basic_token');
+			if (token) {
+				this.basic_token=token
 			}
 
 		}
@@ -262,6 +290,7 @@
 					.breadcrumb-inner {
 						float: right;
 					}
+
 				}
 				.content-wrapper {
 					background-color: #fff;

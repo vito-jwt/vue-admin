@@ -17,7 +17,6 @@ var now_=new Date()
 var ts=now_.getTime();
 now_.setTime(ts -1000 * 60*60*23)
 ts=now_.getTime();
-alert(now_);
 for (let i = 0; i < 24; i++) {
     now_.setTime(ts +1000 * 60*60*i)
     Thashs24H.push({

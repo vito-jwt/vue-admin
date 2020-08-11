@@ -47,7 +47,8 @@ import { GetThash24H,GetThashs24H } from '../../api/api';
 				thash15m:0,
 				active_miner_count:0,
 				inactive_miner_count:0,
-				thashs_line:null
+				thashs_line:null,
+				basic_token:"btc"
 
 			}
 		},
@@ -56,13 +57,13 @@ import { GetThash24H,GetThashs24H } from '../../api/api';
 				console.log('submit!');
 			},
 			initialBasicData(){
-			GetThash24H().then((res) => {
+			GetThash24H(this.basic_token).then((res) => {
 					this.thash24h = res.data.data
 					//NProgress.done();
 				});
 				var column_name=[];
 				var thash_values=[];
-				GetThashs24H().then((res) => {
+				GetThashs24H(this.basic_token).then((res) => {
 					var datas= res.data.data;
 					for(var i=0;i<datas.length;i++) 
 					{
@@ -117,6 +118,10 @@ import { GetThash24H,GetThashs24H } from '../../api/api';
 		mounted() {
 			this.initialBasicData();
 			this.initialDrawLine();
+			var token = sessionStorage.getItem('basic_token');
+			if (token) {
+				this.basic_token=token
+			}
 		}
 	}
 
