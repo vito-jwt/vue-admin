@@ -2,6 +2,7 @@ import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 import Main from './views/Main.vue'
+import KelePoolStatistics from './views/nav1/KelePoolStatistics.vue'
 import Table from './views/nav1/Table.vue'
 import Form from './views/nav1/Form.vue'
 import user from './views/nav1/user.vue'
@@ -27,10 +28,11 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '导航一',
-        iconCls: 'el-icon-message',//图标样式class
+        name: 'kele矿池统计',
+        iconCls: 'el-icon-menu',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
+            { path: '/KelePoolStatistics', component: KelePoolStatistics, name: '矿池整体情信息汇总' },
             { path: '/table', component: Table, name: 'Table' },
             { path: '/form', component: Form, name: 'Form' },
             { path: '/user', component: user, name: '列表' },
@@ -39,7 +41,7 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '导航二',
+        name: '矿工信息',
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/page4', component: Page4, name: '页面4' },
@@ -49,9 +51,18 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '',
+        name: '外接矿池统计',
+        iconCls: 'fa fa-id-card-o',
+        children: [
+            { path: '/page4', component: Page4, name: '页面4' },
+            { path: '/page5', component: Page5, name: '页面5' }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '工具集',
         iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
         children: [
             { path: '/page6', component: Page6, name: '导航三' }
         ]
@@ -59,7 +70,16 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: 'Charts',
+        name: '账户管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/echarts', component: echarts, name: 'echarts' }
+        ]
+    },
+     {
+        path: '/',
+        component: Home,
+        name: '其他',
         iconCls: 'fa fa-bar-chart',
         children: [
             { path: '/echarts', component: echarts, name: 'echarts' }

@@ -2,6 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { LoginUsers, Users } from './data/user';
 let _Users = Users;
+import {Thash24H, Miners,Thashs24H } from './data/kelemoke';
+
 
 export default {
   /**
@@ -149,6 +151,32 @@ export default {
         }, 500);
       });
     });
+
+    //查询总算力
+    mock.onGet('/admin/v1/getthash24h').reply(config => {
+      
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            data: Thash24H
+          }]);
+        }, 500);
+      });
+    });
+
+    //查询24小时总算力按小时统计
+    mock.onGet('/admin/v1/getthashs24h').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            data: Thashs24H
+          }]);
+        }, 500);
+      });
+    });
+
 
   }
 };
