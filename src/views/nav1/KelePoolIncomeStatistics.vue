@@ -4,17 +4,17 @@
 		<el-row type="flex">
 			<el-col :xs="12" :sm="12">
 				<el-card class="mc-ui-flex-center" style="height: 100px;background-color:#409EFF;opacity:0.7" shadow="forever" >
-					<h1>24小时总算力：{{thash24h}}P</h1>
+					<h1>总收益：{{thash24h}}P</h1>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12">
 				<el-card class="mc-ui-flex-center" style="height: 100px;background-color:#409EFF;opacity:0.7" shadow="forever" >
-					<h1>15分钟总算力：{{thash15m}}P</h1>
+					<h1>今日预计收益：{{thash15m}}P</h1>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12">
 				<el-card class="mc-ui-flex-center" style="height: 100px;background-color:#409EFF;opacity:0.7" shadow="forever" >
-					<h1>活跃矿机数：{{active_miner_count}}</h1>
+					<h1>总利润：{{active_miner_count}}</h1>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12">
@@ -24,13 +24,36 @@
 			</el-col>
 		</el-row>
 		<el-row >
-		<el-col style="height: 50px">
+		<el-col style="height: 40px">
 		</el-col>
 		</el-row>
 		<el-row >
 			<el-col>
-				<div id="thashs_line" style="height: 450px">
-				</div>
+				<el-switch v-model="is_table">
+				</el-switch>
+				<section v-show="!is_table">
+					<div id="thashs_line" style="height: 450px">
+					</div>
+				</section>
+				<section v-show="is_table">
+					<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+						<el-table-column type="selection" width="55">
+						</el-table-column>
+						<el-table-column type="index" width="60">
+						</el-table-column>
+						<el-table-column prop="name" label="姓名" width="120" sortable>
+						</el-table-column>
+						<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+						</el-table-column>
+						<el-table-column prop="age" label="年龄" width="100" sortable>
+						</el-table-column>
+					</el-table>
+					<el-col :span="24" class="toolbar">
+						<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+						</el-pagination>
+					</el-col>
+			</section>
+
 			</el-col>
 		</el-row>
 	</el-header>
@@ -49,7 +72,7 @@ import { GetThash24H,GetThashs24H } from '../../api/api';
 				inactive_miner_count:0,
 				thashs_line:null,
 				basic_token:"btc",
-				basic_miner_uid:null
+				is_table:false
 
 			}
 		},
