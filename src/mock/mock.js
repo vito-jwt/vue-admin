@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { LoginUsers, Users } from './data/user';
 let _Users = Users;
-import {Thash24H, Miners,Thashs24H } from './data/kelemoke';
+import {Thash24H, Miners,Thashs24H,MainAccountStatistics } from './data/kelemoke';
 
 
 export default {
@@ -176,6 +176,48 @@ export default {
         }, 500);
       });
     });
+
+       //查询主账户信息
+    mock.onGet('/admin/v1/getmainaccountstatistics').reply(config => {
+     let _MainAccountStatistics=MainAccountStatistics.filter(statistic => {
+          if (config.params.openid && statistic["openid"].indexOf(config.params.openid) == -1) return false;
+          return true;
+        });
+        var order=config.params.order_by.indexOf("-")==-1
+        _MainAccountStatistics=_MainAccountStatistics.sort((a,b)=>{
+          let k=!order? a[config.params.order_by]-b[config.params.order_by]:b[config.params.order_by]-a[config.params.order_by];
+          return k; });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            data: _MainAccountStatistics.slice(config.params.page*20,(config.params.page+1)*20)
+          }]);
+        }, 500);
+      });
+    }); 
+
+    mock.onGet('/admin/v1/getmainaccountstatisticscount').reply(config => {
+      
+      let _MainAccountStatistics=MainAccountStatistics.filter(statistic => {
+          if (config.params.openid && statistic["openid"].indexOf(config.params.openid) == -1) return false;
+          return true;
+        });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            data:_MainAccountStatistics.length
+          }]);
+        }, 500);
+      });
+    }); 
+
+
+
+
+
+
 
 
   }

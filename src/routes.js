@@ -10,6 +10,7 @@ import user from './views/nav1/user.vue'
 import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
 import Page6 from './views/nav3/Page6.vue'
+import MainAccountstatistics from './views/nav2/MainAccountstatistics.vue'
 import echarts from './views/charts/echarts.vue'
 
 let routes = [
@@ -33,8 +34,8 @@ let routes = [
         iconCls: 'el-icon-menu',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/KelePoolStatistics', component: KelePoolStatistics, name: '矿池整体信息汇总' },
-            { path: '/KelePoolIncomeStatistics', component: KelePoolIncomeStatistics, name: '矿池收益信息汇总' },
+            { path: '/kelePoolStatistics', component: KelePoolStatistics, name: '矿池整体信息汇总' },
+            { path: '/kelePoolIncomeStatistics', component: KelePoolIncomeStatistics, name: '矿池收益信息汇总' },
             { path: '/page5', component: Page5, name: '按币种汇总信息' }
         ]
     },
@@ -44,7 +45,7 @@ let routes = [
         name: '矿工信息',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '主账户总体统计' },
+            { path: '/mainAccountstatistics', component: MainAccountstatistics, name: '主账户总体统计' },
             { path: '/page5', component: Page5, name: '子账户信息列表' },
             { path: '/page5', component: Page5, name: '账户详情', hidden: true },
             { path: '/page5', component: Page5, name: '矿机详情' , hidden: true}

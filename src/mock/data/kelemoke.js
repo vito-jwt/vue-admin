@@ -24,5 +24,22 @@ for (let i = 0; i < 24; i++) {
     "xstep": util.formatDate.format(now_, 'yyyy-MM-dd h')
   });
 }
+const MainAccountStatistics=[]
 
-export { Thash24H, Miners,Thashs24H };
+for (let i=0;i<83;i++){
+
+  //24小时算力，15分钟算力，收益，活跃矿机数，非活跃矿机数
+  MainAccountStatistics.push({
+    "thash_24h": Mock.Random.float(1000,3000000),
+    "thash_15m": Mock.Random.float(100,3000000),
+    "active_num": Mock.Random.int(2,5000),
+    "inactive_num": Mock.Random.float(0,10),
+    "income": Mock.Random.float(100000,3000000),
+    "uid":i,
+    "nick_name":Mock.Random.name(),
+    "openid":Mock.Random.string()
+  });
+}
+
+
+export { Thash24H, Miners,Thashs24H,MainAccountStatistics };
