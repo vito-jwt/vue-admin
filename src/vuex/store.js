@@ -8,7 +8,8 @@ Vue.use(Vuex)
 // 应用初始状态
 const state = {
     count: 10,
-    mainAccountDetailUid: 0
+    mainAccountDetailUid: 0,
+    AccountDetailAct:null
 }
 
 // 定义所需的 mutations
@@ -21,6 +22,9 @@ const mutations = {
     },
     setMainAccountDetailUid(state,uid){
         state.mainAccountDetailUid=uid
+    },
+    setAccountDetailAct(state,miner_act){
+        state.AccountDetailAct=miner_act
     }
 }
 

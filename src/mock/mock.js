@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { LoginUsers, Users } from './data/user';
 let _Users = Users;
-import {Thash24H, Miners,Thashs24H,MainAccountStatistics } from './data/kelemoke';
+import {Thash24H, Miners,Thashs24H,MainAccountStatistics,AccountStatistics } from './data/kelemoke';
 
 
 export default {
@@ -23,27 +23,27 @@ export default {
     });
 
     //登录
-    mock.onPost('/login').reply(config => {
-      let {username, password} = JSON.parse(config.data);
-      return new Promise((resolve, reject) => {
-        let user = null;
-        setTimeout(() => {
-          let hasUser = LoginUsers.some(u => {
-            if (u.username === username && u.password === password) {
-              user = JSON.parse(JSON.stringify(u));
-              user.password = undefined;
-              return true;
-            }
-          });
+    // mock.onPost('/login').reply(config => {
+    //   let {username, password} = JSON.parse(config.data);
+    //   return new Promise((resolve, reject) => {
+    //     let user = null;
+    //     setTimeout(() => {
+    //       let hasUser = LoginUsers.some(u => {
+    //         if (u.username === username && u.password === password) {
+    //           user = JSON.parse(JSON.stringify(u));
+    //           user.password = undefined;
+    //           return true;
+    //         }
+    //       });
 
-          if (hasUser) {
-            resolve([200, { code: 200, msg: '请求成功', user }]);
-          } else {
-            resolve([200, { code: 500, msg: '账号或密码错误' }]);
-          }
-        }, 1000);
-      });
-    });
+    //       if (hasUser) {
+    //         resolve([200, { code: 200, msg: '请求成功', user }]);
+    //       } else {
+    //         resolve([200, { code: 500, msg: '账号或密码错误' }]);
+    //       }
+    //     }, 1000);
+    //   });
+    // });
 
     //获取用户列表
     mock.onGet('/user/list').reply(config => {
@@ -213,7 +213,44 @@ export default {
       });
     }); 
 
-
+       //查询子主账户信息
+       mock.onGet('/admin/v1/getaccountstatistics').reply(config => {
+        let _AccountStatistics=AccountStatistics.filter(statistic => {
+             if ((config.params.miner_act && statistic["miner_act"].indexOf(config.params.miner_act) == -1)
+             ||(config.params.uid && statistic["miner_uid"]==config.params.uid) ) 
+              return false;
+             return true;
+           });
+           var order=config.params.order_by.indexOf("-")==-1
+           _AccountStatistics=_AccountStatistics.sort((a,b)=>{
+             let k=!order? a[config.params.order_by]-b[config.params.order_by]:b[config.params.order_by]-a[config.params.order_by];
+             return k; });
+         return new Promise((resolve, reject) => {
+           setTimeout(() => {
+             resolve([200, {
+               code: 200,
+               data: _AccountStatistics.slice(config.params.page*20,(config.params.page+1)*20)
+             }]);
+           }, 500);
+         });
+       }); 
+   
+       mock.onGet('/admin/v1/getaccountstatisticscount').reply(config => {
+         
+         let _AccountStatistics=AccountStatistics.filter(statistic => {
+             if (config.params.miner_act && statistic["miner_act"].indexOf(config.params.miner_act) == -1) return false;
+             return true;
+           });
+         return new Promise((resolve, reject) => {
+           setTimeout(() => {
+             resolve([200, {
+               code: 200,
+               data:_AccountStatistics.length
+             }]);
+           }, 500);
+         });
+       }); 
+   
 
 
 

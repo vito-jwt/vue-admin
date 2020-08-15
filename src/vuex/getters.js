@@ -5,3 +5,7 @@ export const getCount = state => {
 export const getMainAccountDetailUid = state => {
     return state.mainAccountDetailUid;
 }
+
+export const getAccountDetailAct = state => {
+    return state.AccountDetailAct;
+}

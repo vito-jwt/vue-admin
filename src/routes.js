@@ -11,6 +11,7 @@ import Page4 from './views/nav2/Page4.vue'
 import Page5 from './views/nav2/Page5.vue'
 import Page6 from './views/nav3/Page6.vue'
 import MainAccountstatistics from './views/nav2/MainAccountstatistics.vue'
+import Accountstatistics from './views/nav2/Accountstatistics.vue'
 import echarts from './views/charts/echarts.vue'
 
 let routes = [
@@ -46,7 +47,7 @@ let routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/mainAccountstatistics', component: MainAccountstatistics, name: '主账户总体统计' },
-            { path: '/page5', component: Page5, name: '子账户信息列表' },
+            { path: '/accountstatistics', component: Accountstatistics, name: '子账户信息列表' },
             { path: '/page5', component: Page5, name: '账户详情', hidden: true },
             { path: '/page5', component: Page5, name: '矿机详情' , hidden: true}
         ]

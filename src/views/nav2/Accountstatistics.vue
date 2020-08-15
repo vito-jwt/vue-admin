@@ -2,9 +2,6 @@
 	<section>
 	<el-row>
 	<el-col :xs="24">
-		<div id="topn_bl" style="width:100%; height:250px;"></div>
-	</el-col>
-	<el-col :xs="24">
 		<el-input style="width: 28.2%;" v-model="search_filter" placeholder="请输入内容">
 		</el-input>
 		<el-button @click="search">搜索</el-button>
@@ -13,12 +10,12 @@
 	</el-col>
 	<el-col :xs="24">
 				<!--列表-->
-		<el-table :data="main_account_statistics" highlight-current-row v-loading="listLoading"  @sort-change="handleSort" style="width: 100%;">
+		<el-table :data="account_statistics" highlight-current-row v-loading="listLoading"  @sort-change="handleSort" style="width: 100%;">
 			<el-table-column prop="uid" label="uid" width="60">
 			</el-table-column>
 			<el-table-column prop="nick_name" label="账户名" width="120">
 			</el-table-column>
-			<el-table-column prop="openid" label="openid" width="150">
+			<el-table-column prop="miner_act" label="miner_act" width="150">
 			</el-table-column>
 			<el-table-column prop="thash_24h" label="24H算力" width="130" sortable="custom">
 			</el-table-column>
@@ -46,15 +43,14 @@
 	</section>
 </template>
 <script>
-	import { mapGetters } from 'vuex'
-	import { mapActions } from 'vuex'
 	import echarts from 'echarts'
-	import { GetMainAccountStatistics,GetMainAccountStatisticsCount } from '../../api/api';
+	import { mapGetters,mapActions } from 'vuex'
+	import { GetAccountStatistics,GetAccountStatisticsCount } from '../../api/api';
 	export default {
 		data() {
 			return {
 				total_page:0,
-				main_account_statistics:null,
+				account_statistics:null,
 				search_filter:'',
 				topn_bl:null,
 				basic_token:"btc",
@@ -64,6 +60,7 @@
 					nick_name:null,
 					order_by:"thash_24h",
 					page:0,
+					miner_act:null,
 					token:"btc"
 				}
 			}
@@ -71,34 +68,28 @@
 
 	// 	computed:{
     // ...mapGetters([
-    //   'getMainAccountDetailUid'
+    //   'getAccountDetailAct'
     //   // ...
     // ])
 
 	// 	},
 		methods: {
-			fillStruct(get_count=true,draw_bar=false){
+			fillStruct(get_count=true){
 				var x=[];
 				var y=[];
-				GetMainAccountStatistics(this.filters).then((res) => {
-					this.main_account_statistics= res.data.data;
-					for(var i=0;i<this.main_account_statistics.length && i<5;i++) 
-					{
-					x.push(this.main_account_statistics[i]["thash_24h"]);
-					y.push(this.main_account_statistics[i]["nick_name"]);
-					
-					}
-					if (draw_bar)
-					this.drawBarChart(x,y);
+				GetAccountStatistics(this.filters).then((res) => {
+					this.account_statistics= res.data.data;
 				});
 				if(get_count)
-				GetMainAccountStatisticsCount(this.filters).then((res) => {
+				GetAccountStatisticsCount(this.filters).then((res) => {
 					this.total_page=res.data.data;
 				});
 			},
 			initialBasicData(){
+
+				this.filters.uid=this.$route.params.uid;
 				this.filters.token=this.basic_token;
-				this.fillStruct(true,true)
+				this.fillStruct()
 			},
 			handleCurrentChange(val) {
 				this.filters.page=val-1;
@@ -114,11 +105,13 @@
 						this.filters.openid=this.search_filter.replace("@openid=","");
 					}else if(this.search_filter.indexOf('@nick_name=')>-1){
 						this.filters.nick_name=this.search_filter.replace("@nick_name=","");
+					}else if(this.search_filter.indexOf('@uid=')>-1){
+						this.filters.nick_name=this.search_filter.replace("@uid=","");
 					}else{
-						this.filters.uid=this.search_filter;
+						
+						this.filters.miner_act=this.search_filter;
 					}
 				}
-
 				this.fillStruct();
 			},
 			handleSort(column){
@@ -126,49 +119,13 @@
 				this.fillStruct(false);
 
 			},
-			drawBarChart(x,y) {
-                this.topn_bl = echarts.init(document.getElementById('topn_bl'));
-                this.topn_bl.setOption({
-                    title: {
-						text: '',
-                        subtext: '算力Top5'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'value',
-                        boundaryGap: [0, 0.01]
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: y
-                    },
-                    series: [
-                        {
-                            name: '24h算力',
-                            type: 'bar',
-                            data: x
-                        }
-                    ]
-                });
-			},
 			goToDetail(row){
-				// this.setMainAccountDetailUid(row.uid)
-				this.$router.push({name: '子账户信息列表',params:{uid:row.uid}});
+				// this.setAccountDetailAct(row.uid)
+				this.$router.push({ path: '/table' });
 
 			},
 	// 		...mapActions([
-    //   'setMainAccountDetailUid'
+    //   'setAccountDetailAct'
     // ]);
 		},
 		
