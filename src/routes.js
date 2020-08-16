@@ -71,7 +71,7 @@ let routes = [
         iconCls: 'fa fa-address-card',
         children: [
             { path: '/page6', component: Page6, name: '生成观察者地址' },
-            { path: '/page4', component: Page6, name: '配置项设置' }
+            { path: '/page4', component: Page6, name: '配置项设置',hidden: true }
         ]
     },
     {
@@ -80,9 +80,9 @@ let routes = [
         name: '账户管理',
         iconCls: 'fa fa-bar-chart',
         children: [
-            { path: '/echarts', component: echarts, name: '新增账户' },
-            { path: '/echarts', component: echarts, name: '重置密码' },
-            { path: '/echarts', component: echarts, name: '权限配置' }
+            { path: '/echarts', component: echarts, name: '新增账户' ,hidden: true},
+            { path: '/echarts', component: echarts, name: '重置密码',hidden: true },
+            { path: '/echarts', component: echarts, name: '权限配置' ,hidden: true}
         ]
     },
      {
@@ -91,10 +91,10 @@ let routes = [
         name: '其他',
         iconCls: 'fa fa-bar-chart',
         children: [
-            { path: '/echarts', component: echarts, name: '使用介绍' },
-            { path: '/table', component: Table, name: 'Table'},
-            { path: '/form', component: Form, name: 'Form'},
-            { path: '/user', component: user, name: '列表'}
+            { path: '/echarts', component: echarts, name: '使用介绍',hidden: true },
+            { path: '/table', component: Table, name: 'Table',hidden: true},
+            { path: '/form', component: Form, name: 'Form',hidden: true},
+            { path: '/user', component: user, name: '列表',hidden: true}
         ]
     },
     {
