@@ -22,28 +22,28 @@ export default {
       msg: 'failure'
     });
 
-    //登录
-    // mock.onPost('/login').reply(config => {
-    //   let {username, password} = JSON.parse(config.data);
-    //   return new Promise((resolve, reject) => {
-    //     let user = null;
-    //     setTimeout(() => {
-    //       let hasUser = LoginUsers.some(u => {
-    //         if (u.username === username && u.password === password) {
-    //           user = JSON.parse(JSON.stringify(u));
-    //           user.password = undefined;
-    //           return true;
-    //         }
-    //       });
+    登录
+    mock.onPost('/login').reply(config => {
+      let {username, password} = JSON.parse(config.data);
+      return new Promise((resolve, reject) => {
+        let user = null;
+        setTimeout(() => {
+          let hasUser = LoginUsers.some(u => {
+            if (u.username === username && u.password === password) {
+              user = JSON.parse(JSON.stringify(u));
+              user.password = undefined;
+              return true;
+            }
+          });
 
-    //       if (hasUser) {
-    //         resolve([200, { code: 200, msg: '请求成功', user }]);
-    //       } else {
-    //         resolve([200, { code: 500, msg: '账号或密码错误' }]);
-    //       }
-    //     }, 1000);
-    //   });
-    // });
+          if (hasUser) {
+            resolve([200, { code: 200, msg: '请求成功', user }]);
+          } else {
+            resolve([200, { code: 500, msg: '账号或密码错误' }]);
+          }
+        }, 1000);
+      });
+    });
 
     //获取用户列表
     mock.onGet('/user/list').reply(config => {
@@ -153,7 +153,7 @@ export default {
     });
 
     //查询总算力
-    mock.onGet('/admin/v1/getthash24h').reply(config => {
+    mock.onGet('/admin/v1/getpoolstatistics').reply(config => {
       
       return new Promise((resolve, reject) => {
         setTimeout(() => {

@@ -13,6 +13,8 @@
 		<el-table :data="account_statistics" highlight-current-row v-loading="listLoading"  @sort-change="handleSort" style="width: 100%;">
 			<el-table-column prop="uid" label="uid" width="60">
 			</el-table-column>
+			<!-- <el-table-column prop="openid" label="" width="0px" v-show="false" >
+			</el-table-column> -->
 			<el-table-column prop="nick_name" label="账户名" width="120">
 			</el-table-column>
 			<el-table-column prop="miner_act" label="miner_act" width="150">
@@ -21,7 +23,7 @@
 			</el-table-column>
 			<el-table-column prop="thash_15m" label="15M算力" width="130" sortable="custom">
 			</el-table-column>
-			<el-table-column prop="income" label="收益" width="130" sortable="custom">
+			<el-table-column prop="benefit" label="收益" width="130" sortable="custom">
 			</el-table-column>
 			<el-table-column prop="active_num" label="活跃矿机" width="130" sortable="custom">
 			</el-table-column>
@@ -29,7 +31,7 @@
 			</el-table-column>
 			<el-table-column label="操作" width="110">
 				<template scope="scope">
-					<el-button size="small" @click="goToDetail(scope.row)">查看详情</el-button>
+					<el-button size="small" prop="openid" @click="goToDetail(scope.row)">查看详情</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -75,8 +77,6 @@
 	// 	},
 		methods: {
 			fillStruct(get_count=true){
-				var x=[];
-				var y=[];
 				GetAccountStatistics(this.filters).then((res) => {
 					this.account_statistics= res.data.data;
 				});
@@ -121,7 +121,7 @@
 			},
 			goToDetail(row){
 				// this.setAccountDetailAct(row.uid)
-				this.$router.push({ path: '/table' });
+				this.$router.push({name: '账户详情',params:{miner_act:row.miner_act,uid:row.uid,openid:row.openid}});
 
 			},
 	// 		...mapActions([

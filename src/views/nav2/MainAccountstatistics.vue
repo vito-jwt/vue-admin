@@ -24,7 +24,7 @@
 			</el-table-column>
 			<el-table-column prop="thash_15m" label="15M算力" width="130" sortable="custom">
 			</el-table-column>
-			<el-table-column prop="income" label="收益" width="130" sortable="custom">
+			<el-table-column prop="benefit" label="收益" width="130" sortable="custom">
 			</el-table-column>
 			<el-table-column prop="active_num" label="活跃矿机" width="130" sortable="custom">
 			</el-table-column>
@@ -93,7 +93,8 @@
 				});
 				if(get_count)
 				GetMainAccountStatisticsCount(this.filters).then((res) => {
-					this.total_page=res.data.data;
+					
+					this.total_page=res.data.data["total_count"];
 				});
 			},
 			initialBasicData(){

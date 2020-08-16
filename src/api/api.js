@@ -14,11 +14,10 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-let base = '';
+let base = '/api';
 
 export const requestLogin = params => { 
-    console.log(params);
-    return axios.get("/api/admin/v1/adminlogin", { params: params });
+    return axios.get(`${base}/admin/v1/adminlogin`, { params: params });
  };
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
@@ -33,7 +32,11 @@ export const editUser = params => { return axios.get(`${base}/user/edit`, { para
 
 export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }); };
 
-export const GetThash24H = params => { return axios.get(`${base}/admin/v1/getthash24h`, { params: params }); };
+export const GetMinerBill= params => { return axios.get(`${base}/admin/v1/getminerbill`, { params: params }); };
+
+export const GetMinerBillStatistics= params => { return axios.get(`${base}/admin/v1/getminerbillstatistics`, { params: params }); };
+
+export const GetPoolStatistics = params => { return axios.get(`${base}/admin/v1/getpoolstatistics`, { params: params }); };
 
 export const GetThashs24H = params => { return axios.get(`${base}/admin/v1/getthashs24h`, { params: params }); };
 
@@ -44,3 +47,8 @@ export const GetMainAccountStatisticsCount = params => { return axios.get(`${bas
 export const GetAccountStatistics = params => { return axios.get(`${base}/admin/v1/getaccountstatistics`, { params: params }); };
 
 export const GetAccountStatisticsCount = params => { return axios.get(`${base}/admin/v1/getaccountstatisticscount`, { params: params }); };
+
+
+export const GetAccountStatisticsDitail = params => { return axios.get(`${base}/admin/v1/getaccountstatisticsdetail`, { params: params }); };
+
+export const GetAccountStatisticsDitailCount = params => { return axios.get(`${base}/admin/v1/getaccountstatisticsdetailcount`, { params: params }); };

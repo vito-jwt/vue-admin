@@ -51,23 +51,27 @@
             this.logining = true;
             //NProgress.start();
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            requestLogin(loginParams).then(data_ => {
-              this.logining = false;
-              //NProgress.done();
-              console.log(data_)
-              let { code,data,message} = data_.data;
-              alert(data_["message"]);
-              if (code !== 0) {
-                this.$message({
-                  message: message,
-                  type: 'error'
-                });
-              } else {
-                alert(data);
-                sessionStorage.setItem('user', JSON.stringify(data));
-                this.$router.push({ path: '/table' });
-              }
-            });
+            // requestLogin(loginParams).then(data_ => {
+            //   this.logining = false;
+            //   //NProgress.done();
+            //   console.log(data_);
+            //   let { code,data,message} = data_.data;
+            //   if (code !== 0) {
+            //     this.$message({
+            //       message: message,
+            //       type: 'error'
+            //     });
+            //   } else {
+            //     sessionStorage.setItem('user', JSON.stringify(data));
+            //     this.$router.push({ path: '/kelePoolStatistics' });
+            //   }
+            // }).catch(error=>{
+            //             console.log(error);
+            //         });
+            alert("ssss");
+            sessionStorage.setItem('user', "123");
+            this.$router.push({ path: '/kelePoolStatistics'});
+            alert("aaaaa");
           } else {
             console.log('error submit!!');
             return false;

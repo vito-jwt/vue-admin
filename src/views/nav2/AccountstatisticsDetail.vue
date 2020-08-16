@@ -10,7 +10,7 @@
 	</el-col>
 	<el-col :xs="24">
 				<!--列表-->
-		<el-table :data="account_statistics" highlight-current-row v-loading="listLoading"  @sort-change="handleSort" style="width: 100%;">
+		<el-table :data="account_statistics_detail" highlight-current-row v-loading="listLoading"  @sort-change="handleSort" style="width: 100%;">
 			<el-table-column prop="miner_act" label="miner_act" width="150">
 			</el-table-column>
 			<el-table-column prop="worker_act" label="worker_act" width="150">
@@ -39,19 +39,18 @@
 <script>
 	import echarts from 'echarts'
 	import { mapGetters,mapActions } from 'vuex'
-	import { GetAccountStatistics,GetAccountStatisticsCount } from '../../api/api';
+	import { GetAccountStatisticsDitail,GetAccountStatisticsDitailCount } from '../../api/api';
 	export default {
 		data() {
 			return {
 				total_page:0,
-				account_statistics:null,
+				account_statistics_detail:null,
 				search_filter:'',
-				topn_bl:null,
 				basic_token:"btc",
-				filters: {
-					openid:null,
+				openid:null,
 					uid:null,
 					nick_name:null,
+				filters: {
 					order_by:"thash_24h",
 					page:0,
 					miner_act:null,
@@ -69,19 +68,21 @@
 	// 	},
 		methods: {
 			fillStruct(get_count=true){
-				var x=[];
-				var y=[];
-				GetAccountStatistics(this.filters).then((res) => {
-					this.account_statistics= res.data.data;
+				GetAccountStatisticsDitail(this.filters).then((res) => {
+					alert(res.data.data);
+					this.account_statistics_detail= res.data.data;
 				});
 				if(get_count)
-				GetAccountStatisticsCount(this.filters).then((res) => {
+				GetAccountStatisticsDitailCount(this.filters).then((res) => {
+					alert(res.data.data);
 					this.total_page=res.data.data;
 				});
 			},
 			initialBasicData(){
 
-				this.filters.uid=this.$route.params.uid;
+				this.filters.miner_act=this.$route.params.miner_act;
+				this.openid=this.$route.params.openid;
+				this.uid=this.$route.params.uid;
 				this.filters.token=this.basic_token;
 				this.fillStruct()
 			},
@@ -94,15 +95,9 @@
 				this.filters.page=0;
 				if (this.search_filter!='')
 				{
-					if (this.search_filter.indexOf("@openid=")>-1)
-					{
-						this.filters.openid=this.search_filter.replace("@openid=","");
-					}else if(this.search_filter.indexOf('@nick_name=')>-1){
-						this.filters.nick_name=this.search_filter.replace("@nick_name=","");
-					}else if(this.search_filter.indexOf('@uid=')>-1){
-						this.filters.nick_name=this.search_filter.replace("@uid=","");
+					if(this.search_filter.indexOf('@worker_act=')>-1){
+						this.filters.nick_name=this.search_filter.replace("@worker_act=","");
 					}else{
-						
 						this.filters.miner_act=this.search_filter;
 					}
 				}
@@ -115,7 +110,7 @@
 			},
 			goToDetail(row){
 				// this.setAccountDetailAct(row.uid)
-				this.$router.push({ path: '/table' });
+				alert("implement at phase 2");
 
 			},
 	// 		...mapActions([
