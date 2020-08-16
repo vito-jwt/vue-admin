@@ -52,3 +52,7 @@ export const GetAccountStatisticsCount = params => { return axios.get(`${base}/a
 export const GetAccountStatisticsDitail = params => { return axios.get(`${base}/admin/v1/getaccountstatisticsdetail`, { params: params }); };
 
 export const GetAccountStatisticsDitailCount = params => { return axios.get(`${base}/admin/v1/getaccountstatisticsdetailcount`, { params: params }); };
+
+export const Observer = params => { return axios.get(`${base}/admin/v1/observer`, { params: params }); };
+
+export const GetConnectMinerPoolStatistics = params => { return axios.get(`${base}/admin/v1/getconnectminerpoolstatistics`, { params: params }); };

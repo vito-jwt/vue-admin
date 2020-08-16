@@ -14,6 +14,7 @@ import MainAccountstatistics from './views/nav2/MainAccountstatistics.vue'
 import Accountstatistics from './views/nav2/Accountstatistics.vue'
 import AccountstatisticsDetail from './views/nav2/AccountstatisticsDetail.vue'
 import echarts from './views/charts/echarts.vue'
+import ExternalConnectionstatistics from './views/nav3/ExternalConnectionstatistics.vue';
 
 let routes = [
     {
@@ -59,7 +60,7 @@ let routes = [
         name: '外接矿池统计',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '外接矿池统计' },
+            { path: '/externalconnectionstatistics', component: ExternalConnectionstatistics, name: '外接矿池统计' },
             { path: '/page5', component: Page5, name: '详情页',hidden: true}
         ]
     },

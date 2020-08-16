@@ -1,15 +1,19 @@
 <template>
 	<section>
 	<el-row>
-	<el-col :xs="24">
-		<div id="topn_bl" style="width:100%; height:250px;"></div>
+
+	<el-col  v-show="is_table" :xs="24">
+		
+		<div  id="topn_bl" style="width:100%; height:250px;"></div>
 	</el-col>
 	<el-col :xs="24">
 		<el-input style="width: 28.2%;" v-model="search_filter" placeholder="请输入内容">
 		</el-input>
 		<el-button @click="search">搜索</el-button>
 	</el-col>
-	<el-col style="height: 20px;">
+	<el-col style="height: 25px;">
+				<el-switch v-model="is_table">
+				</el-switch>
 	</el-col>
 	<el-col :xs="24">
 				<!--列表-->
@@ -58,6 +62,7 @@
 				search_filter:'',
 				topn_bl:null,
 				basic_token:"btc",
+				is_table:false,
 				filters: {
 					openid:null,
 					uid:null,
