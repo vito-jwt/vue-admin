@@ -1,8 +1,9 @@
 import axios from 'axios';
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
-    let token = sessionStorage.getItem("user");
-    if (token) {
+    let token_str = sessionStorage.getItem("user");
+    if (token_str) {
+        let token=JSON.parse(token_str)
         config.headers['Kele-Admin-Token'] = token["Kele-Admin-Token"]; 
     }else{
         config.headers['Kele-Admin-Token'] = "temp_password_policy";

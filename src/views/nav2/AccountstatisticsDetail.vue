@@ -133,7 +133,7 @@
 			},
 
 			get_obsever_url(){
-				Observer({"miner_act":this.miner_act,"openid":this.openid}).then((res) => {
+				Observer({"miner_act":this.miner_act,"openid":JSON.parse(this.openid)}).then((res) => {
 					console.log(res.data.data);
 					this.self_obsever_url= res.data.data["observer_url"];
 				});
